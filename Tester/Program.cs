@@ -1,4 +1,5 @@
 ﻿using AoECards;
+using System.Collections.Generic;
 
 namespace Tester
 {
@@ -7,7 +8,20 @@ namespace Tester
         static void Main(string[] args)
         {
             var cb = new CardBuilder();
-            cb.BuildCardsFromDB();
+            var cd = new CardDistributor()
+            {
+                CardDefaults = cb.BuildCardsFromDB()
+            };
+
+            var game = new Game()
+            {
+                CardDistributor = cd,
+                Players = new List<Player>()
+                {
+                    new Player("p1"),
+                    new Player("p2")
+                }
+            };
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace AoECards
 {
-    interface IRequiresBuilding
+    public interface IRequiresBuilding
     {
-        Building RequiredBuilding { get; set; }
+        string RequiredBuilding { get; set; }
     }
 }

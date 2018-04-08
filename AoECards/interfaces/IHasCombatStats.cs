@@ -1,6 +1,6 @@
 ﻿namespace AoECards
 {
-    interface IHasCombatStats
+    public interface IHasCombatStats
     {
         CombatStats CombatStats { get; set; }
     }

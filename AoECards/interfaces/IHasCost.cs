@@ -1,6 +1,6 @@
 ﻿namespace AoECards
 {
-    interface IHasCost
+    public interface IHasCost
     {
         ResourceCollection Cost { get; set; }
     }

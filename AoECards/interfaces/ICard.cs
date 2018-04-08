@@ -1,10 +1,14 @@
-﻿namespace AoECards
+﻿using System.Collections.Generic;
+
+namespace AoECards
 { 
-    interface ICard
+    public interface ICard
     {
         string Name { get; set; }
-        string Civ { get; set; }
-        string CardText { get; set; }
+        string Text { get; set; }
         int Age { get; set; }
+        int Limit { get; set; }
+        int AmountInGame { get; set; }
+        List<CardEffect> Effects { get; set; }
     }
 }

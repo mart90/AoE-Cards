@@ -40,24 +40,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="base\Card.cs" />
-    <Compile Include="CardBuilder.cs" />
+    <Compile Include="cards\Card.cs" />
+    <Compile Include="builders\CardBuilder.cs" />
+    <Compile Include="CardDistributor.cs" />
+    <Compile Include="effects\CardEffectLibrary.cs" />
+    <Compile Include="interfaces\IRequiresBuilding.cs" />
+    <Compile Include="Civilization.cs" />
+    <Compile Include="builders\CivilizationBuilder.cs" />
     <Compile Include="CombatResolver.cs" />
+    <Compile Include="CombatStats.cs" />
+    <Compile Include="DatabaseHandler.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="game\GameEventHandler.cs" />
+    <Compile Include="game\Game.cs" />
     <Compile Include="interfaces\ICard.cs" />
+    <Compile Include="interfaces\IHasCards.cs" />
     <Compile Include="interfaces\IHasCombatStats.cs" />
     <Compile Include="interfaces\IHasCost.cs" />
-    <Compile Include="interfaces\IQueueable.cs" />
-    <Compile Include="interfaces\IRequiresBuilding.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Structs.cs" />
-    <Compile Include="Town.cs" />
-    <Compile Include="cardtypes\Building.cs" />
-    <Compile Include="cardtypes\Encounter.cs" />
-    <Compile Include="cardtypes\Worker.cs" />
-    <Compile Include="cardtypes\Tech.cs" />
-    <Compile Include="cardtypes\Unit.cs" />
+    <Compile Include="effects\CardEffect.cs" />
+    <Compile Include="game\Player.cs" />
+    <Compile Include="game\PlayerInteractionHandler.cs" />
+    <Compile Include="ResourceCollection.cs" />
+    <Compile Include="game\Town.cs" />
+    <Compile Include="cards\Building.cs" />
+    <Compile Include="cards\Encounter.cs" />
+    <Compile Include="cards\Worker.cs" />
+    <Compile Include="cards\Tech.cs" />
+    <Compile Include="cards\Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
