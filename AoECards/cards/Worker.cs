@@ -2,7 +2,7 @@
 {
     public class Worker : Card, IHasCost, IRequiresBuilding
     {
-        public ResourceCollection Cost { get; set; }
+        public ResourceCollection Cost { get; set; } = new ResourceCollection();
         public string RequiredBuilding { get; set; }
         public Resource ResourceGathering { get; set; }
 

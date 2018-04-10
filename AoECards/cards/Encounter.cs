@@ -2,7 +2,7 @@
 {
     public class Encounter : Card, IHasCombatStats
     {
-        public CombatStats CombatStats { get; set; }
+        public CombatStats CombatStats { get; set; } = new CombatStats();
         public bool IsPermanent { get; set; }
 
         public override object DeepCopy()

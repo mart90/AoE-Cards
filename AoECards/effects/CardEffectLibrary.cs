@@ -8,11 +8,11 @@ namespace AoECards
         {
             new CardEffect
             {
-                CardName = "Town Center",
+                CardName = "Town center",
                 IsPermanent = true,
                 GameEvent = GameEvent.BuildingDestroyed,
 
-                Condition = town => ((IHasCombatStats)town.GetCardsByName("Town Center")[0]).CombatStats.Defense <= 0,
+                Condition = town => ((IHasCombatStats)town.GetCardsByName("Town center")[0]).CombatStats.Defense <= 0,
 
                 Effect = town =>
                 {

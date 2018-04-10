@@ -6,8 +6,8 @@ namespace AoECards
 {
     public class CardDistributor : IHasCards
     {
-        public List<Card> CardPool { get; set; }
-        public List<Card> CardDefaults { get; set; }
+        public List<Card> CardPool { get; set; } = new List<Card>();
+        public List<Card> CardDefaults { get; set; } = new List<Card>();
 
         public List<T> GetCardsByType<T>()
         {
@@ -27,13 +27,32 @@ namespace AoECards
             return CardPool.FindAll(c => c.Name == cardName);
         }
 
-        public void SetCardPool(List<Player> players)
+        public Card ReleaseCardByName(string cardName)
         {
-            var allowedCards = new List<string>();
-            foreach (var player in players)
+            var availableCards = GetCardsByName(cardName);
+
+            if (availableCards.Count == 0)
             {
-                allowedCards.AddRange(player.Town.Civilization.AllowedCards);
+                return null;
             }
+
+            var releasedCard = availableCards[0];
+            availableCards.RemoveAt(0);
+            return releasedCard;
+        }
+
+        public void AttachToGame(Game game)
+        {
+            foreach (var player in game.Players)
+            {
+                AddCivilizationCardstoCardPool(player.Town.Civilization);
+                player.Town.CardDistributor = this;
+            }
+        }
+
+        public void AddCivilizationCardstoCardPool(Civilization civilization)
+        {
+            var allowedCards = civilization.AllowedCards;
 
             foreach (var cardName in allowedCards)
             {

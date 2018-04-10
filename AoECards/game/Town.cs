@@ -6,10 +6,11 @@ namespace AoECards
     public class Town : IHasCards
     {
         public Civilization Civilization { get; set; }
-        public List<Card> Cards { get; set; }
-        public List<Building> BuildingsQueued { get; set; }
+        public List<Card> Cards { get; set; } = new List<Card>();
+        public List<Building> BuildingsQueued { get; set; } = new List<Building>();
         public ResourceCollection Resources = new ResourceCollection();
         public int WonderCounter { get; set; }
+        public CardDistributor CardDistributor { get; set; }
         private GameEventHandler GameEventHandler { get; set; }
         private PlayerInteractionHandler PlayerInteractionHandler { get; set; }
 
@@ -68,6 +69,11 @@ namespace AoECards
             }
         }
 
+        public Card RequestCardFromDistributor(string cardName)
+        {
+            return CardDistributor.ReleaseCardByName(cardName);
+        }
+
         private void PayCost(IHasCost card)
         {
             Resources.Food -= card.Cost.Food;
@@ -78,7 +84,7 @@ namespace AoECards
 
         public void Queue(IRequiresBuilding card)
         {
-            PayCost((IHasCost)card);
+            PayCost(card);
             var building = GetCardsByType<Building>().Find(b => b.Name == card.RequiredBuilding);
             building.CardQueued = card;
         }

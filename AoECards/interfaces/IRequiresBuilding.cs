@@ -1,6 +1,6 @@
 ﻿namespace AoECards
 {
-    public interface IRequiresBuilding
+    public interface IRequiresBuilding : IHasCost
     {
         string RequiredBuilding { get; set; }
     }

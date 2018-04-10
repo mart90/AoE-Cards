@@ -4,8 +4,7 @@ namespace AoECards
 {
     public class Game
     {
-        public List<Player> Players { get; set; }
-        public CardDistributor CardDistributor { get; set; }
+        public List<Player> Players { get; set; } = new List<Player>();
         public TurnPhase CurrentTurnPhase { get; set; }
 
         public void Start()
@@ -14,7 +13,7 @@ namespace AoECards
             {
                 player.Town.AddUnit("Villager");
                 player.Town.AddUnit("Villager");
-                player.Town.AddBuilding("Town Center");
+                player.Town.AddBuilding("Town center");
             }
         }
     }

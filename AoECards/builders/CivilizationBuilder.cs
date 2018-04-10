@@ -9,30 +9,32 @@ namespace AoECards
         
         public List<Civilization> BuildCivsFromDB()
         {
-            var dbHandler = new DatabaseHandler();
-            DataReader = dbHandler.Query(@"
-                SELECT civ.name as civName, card.name as cardName
-                FROM CivilizationCard cc
-                JOIN Civilization civ ON cc.civilization = civ.id
-                JOIN Card card ON cc.card = Card.id");
+            var civs = new List<Civilization>();
 
-            List<Civilization> civs = new List<Civilization>();
-            while (DataReader.Read())
+            using (var dbHandler = new DatabaseHandler())
             {
-                var civName = DataReader["civName"].ToString();
-                var cardName = DataReader["cardName"].ToString();
+                DataReader = dbHandler.Query(@"
+                    SELECT civ.name as civName, card.name as cardName
+                    FROM CivilizationCard cc
+                    JOIN Civilization civ ON cc.civilization = civ.id
+                    JOIN Card card ON cc.card = card.id");
 
-                var civ = civs.Find(c => c.Name == civName);
-                if (civ == null)
+                while (DataReader.Read())
                 {
-                    civ = new Civilization() { Name = civName };
-                    civs.Add(civ);
-                }
+                    var civName = DataReader["civName"].ToString();
+                    var cardName = DataReader["cardName"].ToString();
 
-                civ.AllowedCards.Add(cardName);
+                    var civ = civs.Find(c => c.Name == civName);
+                    if (civ == null)
+                    {
+                        civ = new Civilization() { Name = civName };
+                        civs.Add(civ);
+                    }
+
+                    civ.AllowedCards.Add(cardName);
+                }
             }
 
-            dbHandler.CloseConnection();
             return civs;
         }
     }

@@ -2,15 +2,18 @@
 {
     public enum Resource
     {
+        Default,
+
         Food,
         Wood,
         Gold,
-        Stone,
-        Default
+        Stone
     }
 
     public enum TurnPhase
     {
+        Default,
+
         Start,
         QueueCompletion,
         Income,
@@ -18,12 +21,13 @@
         TreasureHunting,
         Attacking,
         VillagerRedistribution,
-        End,
-        Default
+        End
     }
 
     public enum GameEvent
     {
+        Default,
+
         UnitQueued,
         BuildingQueued,
         UnitAdded,
@@ -38,18 +42,17 @@
         TurnTreasureHunting,
         TurnAttacking,
         TurnVillagerRedistribution,
-        TurnEnd,
-
-        Default,
+        TurnEnd
     }
 
     public enum UnitType
     {
+        Default,
+
         Infantry,
         Cavalry,
         Ranged,
         Monk,
-        Siege,
-        Default
+        Siege
     }
 }

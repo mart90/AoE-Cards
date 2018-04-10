@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace AoECards
@@ -9,29 +10,33 @@ namespace AoECards
 
         public List<Card> BuildCardsFromDB()
         {
-            var dbHandler = new DatabaseHandler();
-            DataReader = dbHandler.Query("SELECT * FROM Cards");
+            var cards = new List<Card>();
 
-            List<Card> cards = new List<Card>();
-            while (DataReader.Read())
+            using (var dbHandler = new DatabaseHandler())
             {
-                var cardType = DataReader["type"].ToString().Split(' ')[0];
-                switch (cardType)
+                DataReader = dbHandler.Query("SELECT * FROM Card");
+
+                while (DataReader.Read())
                 {
-                    case "Building":
-                        cards.Add(BuildCard<Building>()); break;
-                    case "Encounter":
-                        cards.Add(BuildCard<Encounter>()); break;
-                    case "Tech":
-                        cards.Add(BuildCard<Tech>()); break;
-                    case "Unit":
-                        cards.Add(BuildCard<Unit>()); break;
-                    case "Worker":
-                        cards.Add(BuildCard<Worker>()); break;
+                    var cardType = DataReader["type"].ToString().Split(' ')[0];
+                    switch (cardType)
+                    {
+                        case "Building":
+                            cards.Add(BuildCard<Building>()); break;
+                        case "Encounter":
+                            cards.Add(BuildCard<Encounter>()); break;
+                        case "Tech":
+                            cards.Add(BuildCard<Tech>()); break;
+                        case "Unit":
+                            cards.Add(BuildCard<Unit>()); break;
+                        case "Worker":
+                            cards.Add(BuildCard<Worker>()); break;
+                        case "CivilizationBonus":
+                            cards.Add(BuildCard<CivilizationBonus>()); break;
+                    }
                 }
             }
 
-            dbHandler.CloseConnection();
             return cards;
         }
 
@@ -56,20 +61,20 @@ namespace AoECards
             card.Name = DataReader["name"].ToString();
             card.Text = DataReader["text"]?.ToString();
             card.Age = (int)DataReader["age"];
-            card.Limit = (int)DataReader["limit"];
-            card.AmountInGame = (int)DataReader["amountInGame"];
+            card.Limit = DataReader["limit"] == DBNull.Value ? 0 : (int)DataReader["limit"];
+            card.AmountInGame = DataReader["amountInGame"] == DBNull.Value ? 0 : (int)DataReader["amountInGame"];
 
-            if (typeof(T) == typeof(IHasCost))
+            if (typeof(IHasCost).IsAssignableFrom(typeof(T)))
             {
                 SetCost((IHasCost)card);
             }
 
-            if (typeof(T) == typeof(IHasCombatStats))
+            if (typeof(IHasCombatStats).IsAssignableFrom(typeof(T)))
             {
                 SetCombatStats((IHasCombatStats)card);
             }
 
-            if (typeof(T) == typeof(IRequiresBuilding))
+            if (typeof(IRequiresBuilding).IsAssignableFrom(typeof(T)))
             {
                 ((IRequiresBuilding)card).RequiredBuilding = DataReader["trainAt"].ToString();
             }

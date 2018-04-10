@@ -9,7 +9,9 @@ namespace AoECards
         public int Age { get; set; }
         public int Limit { get; set; }
         public int AmountInGame { get; set; }
-        public List<CardEffect> Effects { get; set; }
+        public List<CardEffect> Effects { get; set; } = new List<CardEffect>();
+
+        public abstract object DeepCopy();
 
         public T DeepCopy<T>() where T: new()
         {
@@ -38,7 +40,5 @@ namespace AoECards
 
             return (T)card;
         }
-
-        public abstract object DeepCopy();
     }
 }

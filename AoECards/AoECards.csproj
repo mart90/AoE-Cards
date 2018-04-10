@@ -43,6 +43,7 @@
     <Compile Include="cards\Card.cs" />
     <Compile Include="builders\CardBuilder.cs" />
     <Compile Include="CardDistributor.cs" />
+    <Compile Include="cards\CivilizationBonus.cs" />
     <Compile Include="effects\CardEffectLibrary.cs" />
     <Compile Include="interfaces\IRequiresBuilding.cs" />
     <Compile Include="Civilization.cs" />
